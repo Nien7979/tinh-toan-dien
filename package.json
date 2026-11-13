@@ -1,0 +1,8 @@
+{
+  "name": "tinh-toan-dien",
+  "version": "1.0.0",
+  "description": "App Tinh Toan Dien — chon day, MCCB, khoi dong dong co",
+  "main": "server.js",
+  "scripts": {"start": "node server.js"},
+  "engines": {"node": ">=18"}
+}

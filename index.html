@@ -1,0 +1,710 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>Tính Toán Điện</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
+    <style>
+      button, [role="button"], select, summary, input:not([type="checkbox"], [type="radio"]) { min-height: 2.25rem; }
+      * { box-sizing: border-box; }
+      :root{
+        --bg:#e9ede6; --panel:#ffffff; --panel2:#f4f6f1;
+        --ink:#1b221c; --muted:#5b675e; --line:#d3d9cf;
+        --brand:#1e2a22; --brand-ink:#f5f2e8;
+        --amber:#e9a400; --amber-deep:#8a5f00; --amber-soft:#fdf3d7;
+        --ok:#177245; --ok-soft:#e2f2e8;
+        --bad:#b3261e; --bad-soft:#fbe7e4;
+        --warn-soft:#fdf3d7;
+        --mono:"IBM Plex Mono",ui-monospace,monospace;
+        --sans:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",sans-serif;
+      }
+      @media (prefers-color-scheme: dark){
+        :root{
+          --bg:#10140f; --panel:#1a1f1a; --panel2:#212721;
+          --ink:#e9ede6; --muted:#a3ada2; --line:#333b32;
+          --brand:#0c110d; --brand-ink:#f5f2e8;
+          --amber:#f0b41c; --amber-deep:#f0b41c; --amber-soft:#3a2f10;
+          --ok:#4cc07e; --ok-soft:#14301f;
+          --bad:#ff8a7a; --bad-soft:#3a1a16;
+          --warn-soft:#3a2f10;
+        }
+      }
+      html{ scroll-behavior:smooth; }
+      body{ margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans); font-size:15.5px; line-height:1.55; }
+      .wrap{ max-width:1060px; margin:0 auto; padding:0 16px 56px; }
+
+      header.band{ background:var(--brand); color:var(--brand-ink); margin:0 -16px; padding:22px 16px 18px; }
+      .band-in{ max-width:1060px; margin:0 auto; display:flex; gap:14px; align-items:flex-start; }
+      .bolt{ flex:0 0 auto; width:44px; height:44px; border-radius:10px; background:var(--amber); display:grid; place-items:center; }
+      .bolt svg{ width:26px; height:26px; }
+      .band h1{ margin:0; font-size:clamp(21px,4.6vw,30px); font-weight:800; line-height:1.2; letter-spacing:-.01em; }
+      .band p{ margin:6px 0 0; color:#c9cfc4; font-size:14px; max-width:640px; }
+      @media (prefers-color-scheme: dark){ .band p{ color:#a9b2a4; } }
+
+      nav.sub{ position:sticky; top:0; z-index:20; background:var(--bg); padding:10px 0 8px; display:flex; gap:8px; flex-wrap:wrap; }
+      nav.sub a{ display:inline-flex; align-items:center; min-height:36px; padding:6px 14px; border:1px solid var(--line); border-radius:999px; background:var(--panel); color:var(--ink); text-decoration:none; font-weight:600; font-size:13.5px; }
+      nav.sub a:active{ background:var(--amber-soft); }
+
+      .alert{ border:1.5px solid var(--amber); background:var(--warn-soft); border-radius:12px; padding:12px 14px; margin:6px 0 18px; font-size:14px; }
+      .alert strong{ color:var(--amber-deep); }
+
+      section{ margin-top:26px; }
+      h2.sec{ font-size:19px; font-weight:800; margin:0 0 4px; display:flex; align-items:center; gap:9px; }
+      h2.sec .n{ font-family:var(--mono); font-size:12.5px; background:var(--brand); color:var(--brand-ink); border-radius:6px; padding:3px 8px; font-weight:600; }
+      .sec-sub{ color:var(--muted); font-size:14px; margin:0 0 14px; }
+
+      .grid2{ display:grid; grid-template-columns:1fr; gap:16px; }
+      @media (min-width:880px){ .grid2{ grid-template-columns:400px 1fr; align-items:start; } }
+
+      .card{ background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:16px; }
+      .card h3{ margin:0 0 12px; font-size:15.5px; font-weight:700; }
+
+      .presets{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
+      .presets button{ border:1px solid var(--line); background:var(--panel2); color:var(--ink); border-radius:10px; padding:8px 12px; font-family:var(--sans); font-weight:600; font-size:13.5px; cursor:pointer; min-height:38px; }
+      .presets button:hover{ border-color:var(--amber); }
+
+      .fields{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+      .fields .full{ grid-column:1 / -1; }
+      label.f{ display:block; font-size:13px; font-weight:600; color:var(--muted); }
+      label.f .unit{ font-weight:500; }
+      label.f input, label.f select{ display:block; width:100%; margin-top:5px; padding:9px 10px; font:inherit; font-size:15.5px; color:var(--ink); background:var(--panel); border:1.5px solid var(--line); border-radius:10px; min-height:44px; }
+      label.f input:focus, label.f select:focus{ outline:2px solid var(--amber); outline-offset:1px; border-color:var(--amber); }
+      label.f input[type="range"]{ padding:0; min-height:36px; border:none; accent-color:var(--amber-deep); }
+      .hint{ font-size:12.5px; color:var(--muted); margin-top:4px; font-weight:400; }
+      .seg{ display:flex; border:1.5px solid var(--line); border-radius:10px; overflow:hidden; margin-top:5px; }
+      .seg button{ flex:1; border:0; background:var(--panel); color:var(--muted); font-family:var(--sans); font-weight:700; font-size:15px; padding:10px 4px; cursor:pointer; min-height:44px; }
+      .seg button.on{ background:var(--brand); color:var(--brand-ink); }
+
+      .kpis{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px; }
+      @media (min-width:560px){ .kpis{ grid-template-columns:repeat(4,1fr); } }
+      .kpi{ background:var(--panel2); border:1px solid var(--line); border-radius:12px; padding:11px 12px; }
+      .kpi .lab{ font-size:12px; font-weight:600; color:var(--muted); text-transform:none; }
+      .kpi .val{ font-family:var(--mono); font-size:21px; font-weight:600; margin-top:2px; }
+      .kpi .val small{ font-size:12.5px; color:var(--muted); font-weight:500; }
+      .kpi.hero{ background:var(--brand); border-color:var(--brand); }
+      .kpi.hero .lab{ color:#b9c2b2; } .kpi.hero .val{ color:#fff; } .kpi.hero .val small{ color:#b9c2b2; }
+
+      .pick{ display:flex; gap:12px; padding:13px 0; border-top:1px solid var(--line); }
+      .pick:first-of-type{ border-top:0; }
+      .pick .ic{ flex:0 0 auto; width:38px; height:38px; border-radius:9px; background:var(--amber-soft); display:grid; place-items:center; font-family:var(--mono); font-weight:600; font-size:12px; color:var(--amber-deep); border:1px solid var(--amber); }
+      .pick .body{ flex:1; min-width:0; }
+      .pick .t{ font-size:13px; font-weight:600; color:var(--muted); }
+      .pick .v{ font-size:17px; font-weight:700; margin:1px 0; }
+      .pick .v .mono{ font-family:var(--mono); }
+      .pick .d{ font-size:13.5px; color:var(--muted); }
+      .badge{ display:inline-block; font-size:12px; font-weight:700; border-radius:999px; padding:2px 9px; vertical-align:2px; margin-left:6px; }
+      .badge.ok{ background:var(--ok-soft); color:var(--ok); }
+      .badge.bad{ background:var(--bad-soft); color:var(--bad); }
+
+      .dropbar{ height:10px; border-radius:99px; background:var(--panel2); border:1px solid var(--line); overflow:hidden; margin-top:6px; }
+      .dropbar i{ display:block; height:100%; background:var(--ok); width:0%; transition:width .25s ease; }
+      .dropbar i.over{ background:var(--bad); }
+
+      details.steps{ margin-top:14px; border-top:1px solid var(--line); padding-top:10px; }
+      details.steps summary{ cursor:pointer; font-weight:700; font-size:14.5px; padding:6px 0; }
+      details.steps ol{ margin:8px 0 4px; padding-left:20px; font-size:14px; color:var(--muted); }
+      details.steps li{ margin-bottom:7px; }
+      details.steps .mono, .mono{ font-family:var(--mono); font-size:.94em; color:var(--ink); }
+      .err{ display:none; background:var(--bad-soft); color:var(--bad); border-radius:10px; padding:10px 12px; font-size:14px; font-weight:600; margin-bottom:12px; }
+      .err.show{ display:block; }
+
+      .tools{ display:grid; grid-template-columns:1fr; gap:16px; }
+      @media (min-width:880px){ .tools{ grid-template-columns:1fr 1fr; } .tools .wide{ grid-column:1 / -1; } }
+      .out{ margin-top:12px; background:var(--panel2); border:1px solid var(--line); border-radius:10px; padding:11px 13px; font-size:14.5px; }
+      .out .row{ display:flex; justify-content:space-between; gap:12px; padding:3px 0; }
+      .out .row span:first-child{ color:var(--muted); }
+      .out .row b{ font-family:var(--mono); font-weight:600; text-align:right; }
+      .conv{ display:grid; grid-template-columns:1fr auto 1fr; gap:8px; align-items:end; }
+      .conv .arr{ font-size:19px; padding-bottom:10px; color:var(--muted); }
+      .conv input, .conv select{ width:100%; padding:9px 10px; font:inherit; color:var(--ink); background:var(--panel); border:1.5px solid var(--line); border-radius:10px; min-height:44px; }
+      .conv label{ font-size:13px; font-weight:600; color:var(--muted); display:block; }
+      .conv label input, .conv label select{ margin-top:5px; }
+
+      table{ width:100%; border-collapse:collapse; font-size:13.5px; background:var(--panel); }
+      .tbl{ border:1px solid var(--line); border-radius:12px; overflow:hidden; margin-bottom:18px; }
+      th{ background:var(--brand); color:var(--brand-ink); text-align:right; padding:9px 10px; font-weight:600; font-size:13px; }
+      th:first-child, td:first-child{ text-align:left; }
+      td{ padding:7px 10px; border-top:1px solid var(--line); text-align:right; font-family:var(--mono); font-size:13px; }
+      td:first-child{ font-family:var(--sans); font-weight:600; }
+      tr.hl td{ background:var(--amber-soft); font-weight:600; }
+      caption{ text-align:left; font-weight:700; font-size:15px; padding:0 0 8px; caption-side:top; color:var(--ink); font-family:var(--sans); }
+      .tblnote{ font-size:13px; color:var(--muted); margin:-10px 0 18px; }
+      .cols2{ display:grid; grid-template-columns:1fr; gap:0 22px; }
+      @media (min-width:880px){ .cols2{ grid-template-columns:1fr 1fr; } }
+
+      footer{ margin-top:34px; border-top:1px solid var(--line); padding-top:16px; color:var(--muted); font-size:13.5px; }
+      @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } .dropbar i{ transition:none; } }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="band">
+        <div class="band-in">
+          <div class="bolt" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M13 2 4.5 13.5H11L9.8 22 19 10h-6.5L13 2Z" fill="#1e2a22"/></svg>
+          </div>
+          <div>
+            <h1>Tính chọn dây, MCCB &amp; khởi động động cơ</h1>
+            <p>Nhập thông số động cơ — app tính dòng điện, chọn tiết diện dây đồng, MCCB, contactor, rơ le nhiệt và phương án khởi động, kèm kiểm tra sụt áp.</p>
+          </div>
+        </div>
+      </header>
+
+      <nav class="sub" aria-label="Mục lục">
+        <a href="#tinh-toan">Tính &amp; chọn thiết bị</a>
+        <a href="#cong-cu">Ngắn mạch · Bù công suất · Đổi đơn vị</a>
+        <a href="#bang-tra">Bảng tra cứu</a>
+      </nav>
+
+      <div class="alert" role="note">
+        <strong>⚠ Cảnh báo an toàn:</strong> Kết quả trong app chỉ để <strong>tham khảo và học tập</strong>. Trước khi thi công phải kiểm tra lại theo tiêu chuẩn thực tế (IEC 60364, TCVN 7447, quy định của điện lực) và điều kiện hiện trường; việc lắp đặt phải do thợ điện có chuyên môn thực hiện, ngắt điện và kiểm tra hết điện trước khi thao tác.
+      </div>
+
+      <section id="tinh-toan">
+        <h2 class="sec"><span class="n">01</span> Tính toán &amp; chọn thiết bị</h2>
+        <p class="sec-sub">Kết quả tự cập nhật ngay khi bạn thay đổi thông số.</p>
+
+        <div class="grid2">
+          <div class="card">
+            <h3>Thông số đầu vào</h3>
+            <div class="presets">
+              <button type="button" id="ex55">Ví dụ: Động cơ 5,5 kW</button>
+              <button type="button" id="ex15">Ví dụ: Động cơ 15 kW</button>
+            </div>
+            <div class="err" id="errBox"></div>
+            <div class="fields">
+              <label class="f">Công suất động cơ <span class="unit">(kW)</span>
+                <input type="number" id="inP" value="7.5" min="0.1" step="0.1" inputmode="decimal" />
+                <span class="hint" id="hpHint"></span>
+              </label>
+              <label class="f">Điện áp nguồn
+                <span class="seg" role="group" aria-label="Điện áp">
+                  <button type="button" id="u380" class="on">380 V · 3 pha</button>
+                  <button type="button" id="u220">220 V · 1 pha</button>
+                </span>
+                <span class="hint" id="phaseHint">Động cơ 3 pha, đấu vào lưới 380 V.</span>
+              </label>
+              <label class="f">Hệ số công suất cos φ
+                <input type="number" id="inCos" value="0.85" min="0.5" max="0.99" step="0.01" inputmode="decimal" />
+              </label>
+              <label class="f">Hiệu suất η <span class="unit">(0–1)</span>
+                <input type="number" id="inEta" value="0.88" min="0.5" max="0.99" step="0.01" inputmode="decimal" />
+              </label>
+              <label class="f">Chiều dài dây <span class="unit">(m, 1 chiều)</span>
+                <input type="number" id="inLen" value="30" min="1" step="1" inputmode="decimal" />
+              </label>
+              <label class="f">Nhiệt độ môi trường <span class="unit">(°C)</span>
+                <input type="number" id="inTemp" value="35" min="10" max="60" step="1" inputmode="numeric" />
+                <input type="range" id="inTempR" value="35" min="15" max="55" step="1" aria-label="Nhiệt độ môi trường (thanh trượt)" />
+              </label>
+              <label class="f full">Cách lắp đặt dây
+                <select id="inMethod">
+                  <option value="ong">Trong ống / hộp gen (luồn ống)</option>
+                  <option value="mang" selected>Trên thang / máng cáp, thoáng khí</option>
+                  <option value="dat">Chôn trực tiếp trong đất</option>
+                </select>
+              </label>
+              <label class="f full">Phương án khởi động
+                <select id="inStarter">
+                  <option value="auto" selected>Tự động đề xuất theo công suất</option>
+                  <option value="dol">Khởi động trực tiếp (DOL)</option>
+                  <option value="yd">Sao – tam giác (Y–Δ)</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div class="card" aria-live="polite">
+            <h3>Kết quả</h3>
+            <div class="kpis">
+              <div class="kpi hero"><div class="lab">Dòng định mức I<sub>đm</sub></div><div class="val"><span id="kI">–</span> <small>A</small></div></div>
+              <div class="kpi"><div class="lab">Dòng khởi động</div><div class="val"><span id="kIstart">–</span> <small>A</small></div></div>
+              <div class="kpi"><div class="lab">Công suất biểu kiến</div><div class="val"><span id="kS">–</span> <small>kVA</small></div></div>
+              <div class="kpi"><div class="lab">Sụt áp khi chạy</div><div class="val"><span id="kDrop">–</span> <small>%</small></div></div>
+            </div>
+
+            <div class="pick">
+              <div class="ic">DÂY</div>
+              <div class="body">
+                <div class="t">Tiết diện dây đồng (Cu/XLPE)</div>
+                <div class="v"><span class="mono" id="rWire">–</span><span class="badge ok" id="rWireBadge">Đạt</span></div>
+                <div class="d" id="rWireD">–</div>
+                <div class="dropbar" aria-hidden="true"><i id="dropFill"></i></div>
+                <div class="d" id="rDropD">–</div>
+              </div>
+            </div>
+
+            <div class="pick">
+              <div class="ic">MCCB</div>
+              <div class="body">
+                <div class="t">Áp-tô-mát MCCB bảo vệ</div>
+                <div class="v"><span class="mono" id="rMccb">–</span></div>
+                <div class="d" id="rMccbD">–</div>
+              </div>
+            </div>
+
+            <div class="pick">
+              <div class="ic">KM</div>
+              <div class="body">
+                <div class="t">Contactor (khởi động từ)</div>
+                <div class="v"><span class="mono" id="rKm">–</span></div>
+                <div class="d" id="rKmD">–</div>
+              </div>
+            </div>
+
+            <div class="pick">
+              <div class="ic">RN</div>
+              <div class="body">
+                <div class="t">Rơ le nhiệt bảo vệ quá tải</div>
+                <div class="v"><span class="mono" id="rRn">–</span></div>
+                <div class="d" id="rRnD">–</div>
+              </div>
+            </div>
+
+            <div class="pick">
+              <div class="ic">KĐ</div>
+              <div class="body">
+                <div class="t">Phương án khởi động</div>
+                <div class="v" id="rStart">–</div>
+                <div class="d" id="rStartD">–</div>
+              </div>
+            </div>
+
+            <details class="steps">
+              <summary>Xem trình tự tính &amp; công thức</summary>
+              <ol id="stepsList"></ol>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section id="cong-cu">
+        <h2 class="sec"><span class="n">02</span> Công cụ bổ sung</h2>
+        <p class="sec-sub">Ước tính dòng ngắn mạch để kiểm tra khả năng cắt của MCCB, tính tụ bù nâng cos φ, và chuyển đổi đơn vị thường dùng.</p>
+
+        <div class="tools">
+          <div class="card">
+            <h3>Dòng ngắn mạch ước tính</h3>
+            <div class="fields">
+              <label class="f">Máy biến áp <span class="unit">(kVA)</span>
+                <input type="number" id="scKva" value="400" min="10" step="10" inputmode="decimal" />
+              </label>
+              <label class="f">Điện áp ngắn mạch u<sub>k</sub> <span class="unit">(%)</span>
+                <input type="number" id="scUk" value="5" min="2" max="10" step="0.1" inputmode="decimal" />
+                <span class="hint">Tra trên nhãn máy biến áp, thường 4–6%.</span>
+              </label>
+              <label class="f">Tiết diện cáp nguồn <span class="unit">(mm²)</span>
+                <select id="scSize"></select>
+              </label>
+              <label class="f">Chiều dài cáp từ biến áp <span class="unit">(m)</span>
+                <input type="number" id="scLen" value="30" min="0" step="1" inputmode="decimal" />
+              </label>
+            </div>
+            <div class="out" id="scOut"></div>
+            <p class="hint">Ước tính gần đúng (cộng trở kháng biến áp và cáp, điện trở suất đồng 0,0225 Ω·mm²/m, điện kháng cáp 0,08 Ω/km). Dòng ngắn mạch thực tế còn phụ thuộc lưới phía trước biến áp — khi chọn MCCB, lấy I<sub>cu</sub> lớn hơn giá trị này và đối chiếu catalogue hãng.</p>
+          </div>
+
+          <div class="card">
+            <h3>Bù công suất phản kháng</h3>
+            <div class="fields">
+              <label class="f">Công suất tải P <span class="unit">(kW)</span>
+                <input type="number" id="buP" value="50" min="0.1" step="0.5" inputmode="decimal" />
+              </label>
+              <label class="f">cos φ hiện tại
+                <input type="number" id="buCos1" value="0.80" min="0.5" max="0.99" step="0.01" inputmode="decimal" />
+              </label>
+              <label class="f">cos φ mục tiêu
+                <input type="number" id="buCos2" value="0.95" min="0.8" max="1" step="0.01" inputmode="decimal" />
+                <span class="hint">Nên bù tới 0,90–0,95; bù quá 0,98 dễ quá bù khi tải giảm.</span>
+              </label>
+              <label class="f">Điện áp <span class="unit">(V, 3 pha)</span>
+                <input type="number" id="buU" value="380" min="100" step="10" inputmode="decimal" />
+              </label>
+            </div>
+            <div class="out" id="buOut"></div>
+            <p class="hint">Công thức: Q<sub>bù</sub> = P × (tan φ<sub>1</sub> − tan φ<sub>2</sub>). Thiết bị đóng cắt cho tụ nên chọn dòng ≥ 1,5 × dòng tụ; tụ bù hạ thế thường ghép nhiều cấp nhỏ để đóng cắt theo tải.</p>
+          </div>
+
+          <div class="card">
+            <h3>Đổi kW ↔ HP (mã lực)</h3>
+            <div class="conv">
+              <label>công suất (kW)<input type="number" id="cvKw" value="7.5" step="0.1" inputmode="decimal" /></label>
+              <div class="arr" aria-hidden="true">⇄</div>
+              <label>công suất (HP)<input type="number" id="cvHp" value="10.06" step="0.1" inputmode="decimal" /></label>
+            </div>
+            <p class="hint">1 HP = 0,746 kW · 1 kW = 1,34 HP. Lưu ý mã lực mét (PS/cv) nhỏ hơn một chút: 1 PS = 0,7355 kW — động cơ châu Âu ghi kW nên ưu tiên dùng kW.</p>
+          </div>
+
+          <div class="card">
+            <h3>Đổi AWG ↔ mm²</h3>
+            <div class="conv">
+              <label>Cỡ dây AWG
+                <select id="cvAwg"></select>
+              </label>
+              <div class="arr" aria-hidden="true">→</div>
+              <label>Tiết diện (mm²)<input type="number" id="cvMm" value="5.26" step="0.01" inputmode="decimal" /></label>
+            </div>
+            <div class="out" id="awgOut"></div>
+            <p class="hint">AWG càng lớn thì dây càng nhỏ. Khi thay dây AWG bằng dây mm², luôn chọn tiết diện tiêu chuẩn lớn hơn gần nhất và kiểm tra lại dòng cho phép ở bảng tra bên dưới.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="bang-tra">
+        <h2 class="sec"><span class="n">03</span> Bảng tra cứu</h2>
+        <p class="sec-sub">Các bảng app dùng để chọn thiết bị — bấm nút ví dụ ở trên, hàng được chọn sẽ sáng lên. Giá trị là dòng cho phép tham khảo của cáp đồng cách điện XLPE, 3 lõi chịu tải, ở 30 °C (theo IEC 60364-5-52), trước khi nhân hệ số nhiệt độ. Nếu dùng cáp cách điện PVC (nhiệt độ ruột tối đa 70 °C thay vì 90 °C), dòng cho phép thấp hơn — phải tra bảng PVC riêng của hãng, không dùng chung bảng này.</p>
+
+        <div class="tbl">
+          <table id="wireTable">
+            <caption>Bảng 1 — Dòng cho phép của dây đồng theo tiết diện &amp; cách lắp đặt (A)</caption>
+            <thead><tr><th>Tiết diện (mm²)</th><th>Trong ống</th><th>Máng thoáng</th><th>Chôn đất</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <p class="tblnote">Hệ số hiệu chỉnh nhiệt độ (cách điện XLPE, nhiệt độ ruột tối đa 90 °C): 25 °C → 1,04 · 30 °C → 1,00 · 35 °C → 0,96 · 40 °C → 0,91 · 45 °C → 0,87 · 50 °C → 0,82 · 55 °C → 0,76. Dòng cho phép sau hiệu chỉnh = giá trị bảng × hệ số. Nếu nhiều mạch đi chung ống/máng, phải nhân thêm hệ số giảm do lắp đặt chùm theo tiêu chuẩn.</p>
+
+        <div class="cols2">
+          <div class="tbl">
+            <table id="mccbTable">
+              <caption>Bảng 2 — MCCB: dòng định mức chuẩn &amp; khả năng cắt gợi ý (400 V)</caption>
+              <thead><tr><th>I<sub>n</sub> (A)</th><th>I<sub>cu</sub> gợi ý</th><th>Khung thường gặp</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div>
+            <div class="tbl">
+              <table id="rnTable">
+                <caption>Bảng 3 — Dải chỉnh rơ le nhiệt thông dụng (A)</caption>
+                <thead><tr><th>Dải chỉnh</th><th>Đặt giữa dải ≈</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <div class="tbl">
+              <table id="awgTable">
+                <caption>Bảng 4 — Quy đổi AWG sang mm²</caption>
+                <thead><tr><th>AWG</th><th>mm²</th><th>Ø ruột (mm)</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <p class="tblnote">Gợi ý nhanh chọn khởi động: động cơ ≤ 7,5 kW — khởi động trực tiếp DOL; 7,5–11 kW — DOL vẫn dùng được nếu lưới khỏe, tải nhẹ; ≥ 11 kW — nên dùng sao–tam giác Y–Δ, khởi động mềm hoặc biến tần để giảm dòng khởi động và sụt áp lưới.</p>
+      </section>
+
+      <footer>
+        <p><strong>Lưu ý:</strong> Mọi kết quả chỉ mang tính tham khảo cho học tập và ước lượng ban đầu. Tiết diện dây, MCCB và thiết bị đóng cắt phải được kiểm tra lại theo catalogue của hãng, tiêu chuẩn IEC 60364 / TCVN 7447 và điều kiện lắp đặt thực tế trước khi thi công. Không tự ý thao tác trên hệ thống điện khi chưa được đào tạo và chưa cắt điện an toàn.</p>
+      </footer>
+    </div>
+
+    <script>
+      "use strict";
+      var $ = function (id) { return document.getElementById(id); };
+      var fmt = function (x, d) {
+        return x.toLocaleString("vi-VN", { minimumFractionDigits: d, maximumFractionDigits: d });
+      };
+      var fmtF = function (x) { // toi da 2 so thap phan, bo so 0 thua
+        return x.toLocaleString("vi-VN", { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+      };
+
+      /* ---------- Du lieu bang tra ---------- */
+      // [tiet dien mm2, trong ong, mang thoang, chon dat] - dong cho phep (A), Cu, 30°C
+      var CABLE = [
+        [1.5, 15.5, 17.5, 22], [2.5, 21, 24, 29], [4, 28, 32, 38], [6, 36, 41, 47],
+        [10, 50, 57, 63], [16, 66, 76, 81], [25, 84, 96, 104], [35, 104, 119, 125],
+        [50, 125, 144, 148], [70, 160, 184, 187], [95, 194, 223, 216], [120, 227, 259, 246],
+        [150, 261, 299, 278], [185, 302, 344, 312], [240, 361, 415, 360]
+      ];
+      var METHOD_IDX = { ong: 1, mang: 2, dat: 3 };
+      var METHOD_NAME = { ong: "trong ống", mang: "trên máng thoáng", dat: "chôn trong đất" };
+      var MCCB_STD = [10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800];
+      // [A AC-3, kW o 400V]
+      var KM_STD = [[9, 4], [12, 5.5], [18, 7.5], [25, 11], [32, 15], [40, 18.5], [50, 22], [65, 30], [80, 37], [95, 45], [115, 55], [150, 75], [185, 90], [225, 110], [265, 132], [330, 160], [400, 200], [500, 250], [630, 315]];
+      var RN_RANGES = [[0.63, 1], [1, 1.6], [1.6, 2.5], [2.5, 4], [4, 6], [5.5, 8], [7, 10], [9, 13], [12, 18], [17, 25], [23, 32], [30, 38], [37, 50], [48, 65], [55, 70], [63, 80], [80, 93], [95, 120], [110, 140], [132, 160]];
+      var AWG = [[20, 0.52], [18, 0.82], [16, 1.31], [14, 2.08], [12, 3.31], [10, 5.26], [8, 8.37], [6, 13.3], [4, 21.2], [2, 33.6], [1, 42.4], ["1/0", 53.5], ["2/0", 67.4], ["3/0", 85], ["4/0", 107], ["250 kcmil", 127], ["350 kcmil", 177], ["500 kcmil", 253]];
+      var RHO = 0.0225; // ohm.mm2/m, dong o nhiet do van hanh
+      var XKM = 0.00008; // ohm/m dien khang cap
+
+      var state = { U: 380 };
+
+      function kTemp(t) { return Math.sqrt(Math.max(90 - t, 5) / 60); }
+      function nextStd(list, v) { for (var i = 0; i < list.length; i++) if (list[i] >= v) return list[i]; return null; }
+      function icuFor(inA) {
+        if (inA <= 63) return 25; if (inA <= 160) return 36; if (inA <= 400) return 50; return 65;
+      }
+      function dropPct(I, L, S, U, three, cos) {
+        var sin = Math.sqrt(Math.max(1 - cos * cos, 0));
+        var z = (RHO / S) * cos + XKM * sin;
+        var dU = three ? Math.sqrt(3) * I * L * z : 2 * I * L * z;
+        return dU / U * 100;
+      }
+
+      /* ---------- Tinh toan chinh ---------- */
+      function calc() {
+        var P = parseFloat($("inP").value), cos = parseFloat($("inCos").value),
+            eta = parseFloat($("inEta").value), L = parseFloat($("inLen").value),
+            T = parseFloat($("inTemp").value), method = $("inMethod").value,
+            starterSel = $("inStarter").value, U = state.U, three = (U === 380);
+        var err = "";
+        if (!(P > 0)) err = "Hãy nhập công suất động cơ lớn hơn 0 kW.";
+        else if (!(cos >= 0.5 && cos <= 0.99)) err = "cos φ phải nằm trong khoảng 0,50 – 0,99.";
+        else if (!(eta >= 0.5 && eta <= 0.99)) err = "Hiệu suất η phải nằm trong khoảng 0,50 – 0,99.";
+        else if (!(L > 0)) err = "Hãy nhập chiều dài dây lớn hơn 0 m.";
+        else if (!(T >= 10 && T <= 60)) err = "Nhiệt độ môi trường phải trong khoảng 10 – 60 °C.";
+        $("errBox").textContent = err;
+        $("errBox").className = "err" + (err ? " show" : "");
+        if (err) return;
+
+        $("hpHint").textContent = "≈ " + fmt(P / 0.746, 1) + " HP";
+
+        var Pin = P / eta; // kW dien tieu thu
+        var I = three ? (Pin * 1000) / (Math.sqrt(3) * U * cos) : (Pin * 1000) / (U * cos);
+        var S_kva = three ? Math.sqrt(3) * U * I / 1000 : U * I / 1000;
+
+        // Phuong an khoi dong
+        var mode;
+        if (!three) mode = "dol";
+        else if (starterSel === "dol") mode = "dol";
+        else if (starterSel === "yd") mode = "yd";
+        else mode = (P >= 11) ? "yd" : "dol";
+        var kStart = 6; // he so dong khoi dong DOL
+        var Istart = I * kStart / (mode === "yd" ? 3 : 1);
+
+        // MCCB: In >= 1,25 x I (ro le nhiet bao ve qua tai)
+        var need = I * 1.25;
+        var In = nextStd(MCCB_STD, need);
+        var icu = In ? icuFor(In) : null;
+
+        // Day: Iz sau hieu chinh >= In MCCB, dong thoi sut ap <= 5%
+        var kT = kTemp(T), col = METHOD_IDX[method];
+        var chosen = null, drop = null, izC = null;
+        for (var i = 0; i < CABLE.length; i++) {
+          var iz = CABLE[i][col] * kT;
+          if (In && iz < In) continue;
+          var d = dropPct(I, L, CABLE[i][0], U, three, cos);
+          chosen = CABLE[i]; izC = iz; drop = d;
+          if (d <= 5) break;
+        }
+        var maxed = chosen === CABLE[CABLE.length - 1] && (drop > 5 || (In && izC < In));
+        var dropStart = chosen ? dropPct(Istart, L, chosen[0], U, three, 0.35) : null;
+
+        // Contactor
+        var kmMain = null, kmD = null, kmY = null;
+        function pickKm(a) { for (var j = 0; j < KM_STD.length; j++) if (KM_STD[j][0] >= a) return KM_STD[j]; return null; }
+        if (mode === "yd") { kmD = pickKm(I / Math.sqrt(3)); kmMain = kmD; kmY = pickKm(I * 0.33); }
+        else kmMain = pickKm(I);
+
+        // Ro le nhiet
+        var rn = null;
+        for (var k = 0; k < RN_RANGES.length; k++) if (I >= RN_RANGES[k][0] && I <= RN_RANGES[k][1]) { rn = RN_RANGES[k]; break; }
+        if (!rn) for (var m = 0; m < RN_RANGES.length; m++) if (RN_RANGES[m][1] >= I) { rn = RN_RANGES[m]; break; }
+
+        /* ----- Hien thi ----- */
+        $("kI").textContent = fmt(I, 1);
+        $("kIstart").textContent = fmt(Istart, 0);
+        $("kS").textContent = fmt(S_kva, 1);
+        $("kDrop").textContent = chosen ? fmt(drop, 2) : "—";
+
+        $("rWire").textContent = chosen ? ("Cu " + fmt(chosen[0], chosen[0] % 1 ? 1 : 0) + " mm²") : "Vượt bảng tra";
+        var badge = $("rWireBadge");
+        if (chosen && drop <= 5) { badge.textContent = "Sụt áp đạt"; badge.className = "badge ok"; }
+        else { badge.textContent = "Kiểm tra lại"; badge.className = "badge bad"; }
+        $("rWireD").textContent = chosen
+          ? "Dòng cho phép " + fmtF(CABLE[CABLE.indexOf(chosen)][col]) + " A (" + METHOD_NAME[method] + ", 30 °C) × hệ số nhiệt " + fmt(kT, 2) + " = " + fmt(izC, 0) + " A ≥ MCCB " + (In || "—") + " A."
+          : "Tải quá lớn so với bảng tra — cần tính riêng theo catalogue.";
+        $("dropFill").style.width = chosen ? Math.min(drop / 5 * 100, 100) + "%" : "0%";
+        $("dropFill").className = (chosen && drop > 5) ? "over" : "";
+        $("rDropD").textContent = chosen
+          ? "Sụt áp khi chạy: " + fmt(drop, 2) + "% (giới hạn 5%) · khi khởi động ≈ " + fmt(dropStart, 1) + "% (nên ≤ 15%)."
+          : "";
+
+        $("rMccb").textContent = In ? ("MCCB " + In + " A · " + (three ? "3P" : "2P")) : "Vượt bảng tra";
+        $("rMccbD").textContent = In
+          ? "Chọn theo 1,25 × Iđm = " + fmt(need, 1) + " A → cỡ chuẩn " + In + " A. Khả năng cắt Icu tại 400 V nên ≥ " + icu + " kA (đối chiếu dòng ngắn mạch ước tính ở mục 02). Dòng cắt từ thường đặt 10 × In để không nhảy khi khởi động (" + fmt(Istart, 0) + " A)."
+          : "";
+
+        if (mode === "yd" && kmD) {
+          $("rKm").textContent = "3 contactor AC-3";
+          $("rKmD").textContent = "KM chính & KM tam giác: " + kmD[0] + " A (chịu I/√3 ≈ " + fmt(I / Math.sqrt(3), 1) + " A) · KM sao: " + (kmY ? kmY[0] : "—") + " A (chịu ≈ " + fmt(I * 0.33, 1) + " A). Cuộn hút 220 VAC hoặc theo điện điều khiển hiện có.";
+        } else {
+          $("rKm").textContent = kmMain ? ("Contactor " + kmMain[0] + " A · AC-3") : "Vượt bảng tra";
+          $("rKmD").textContent = kmMain
+            ? "Cỡ AC-3 ≥ Iđm = " + fmt(I, 1) + " A; định mức " + kmMain[0] + " A tương đương động cơ tới " + fmt(kmMain[1], 1) + " kW ở 400 V. Chọn cuộn hút theo điện áp điều khiển (thường 220 VAC)."
+            : "";
+        }
+
+        $("rRn").textContent = rn ? ("Dải " + fmtF(rn[0]) + " – " + fmtF(rn[1]) + " A") : "Vượt bảng tra";
+        $("rRnD").textContent = rn
+          ? (mode === "yd"
+            ? "Đặt rơ le trong nhánh tam giác: chỉnh ở " + fmt(I / Math.sqrt(3), 1) + " A (Iđm/√3). Nếu đặt trên đường dây chính thì chỉnh bằng Iđm = " + fmt(I, 1) + " A và chọn đúng dải tương ứng."
+            : "Chỉnh núm đặt ở " + fmt(I, 1) + " A (= Iđm động cơ, tra thêm trên nhãn/plate động cơ). Rơ le nhiệt mới là thiết bị bảo vệ quá tải chính; MCCB chủ yếu chống ngắn mạch.")
+          : "";
+
+        if (!three) {
+          $("rStart").textContent = "Khởi động trực tiếp (DOL)";
+          $("rStartD").textContent = "Động cơ 1 pha 220 V không dùng sao–tam giác. Dòng khởi động ≈ 6 × Iđm = " + fmt(Istart, 0) + " A.";
+        } else if (mode === "yd") {
+          $("rStart").textContent = "Sao – tam giác (Y–Δ)";
+          $("rStartD").textContent = "Dòng khởi động giảm còn 1/3 so với DOL: ≈ " + fmt(Istart, 0) + " A (2 × Iđm), mô-men khởi động cũng còn 1/3 — phù hợp tải khởi động nhẹ/trung bình. Động cơ phải có 6 đầu dây và điện áp Δ bằng 380 V."
+            + (starterSel === "auto" && P >= 11 ? " Đề xuất vì công suất ≥ 11 kW." : "");
+        } else {
+          $("rStart").textContent = "Khởi động trực tiếp (DOL)";
+          $("rStartD").textContent = "Dòng khởi động ≈ 6 × Iđm = " + fmt(Istart, 0) + " A. "
+            + (P >= 7.5 ? "Công suất đã ở vùng 7,5–11 kW: DOL vẫn dùng được nếu lưới khỏe và tải cho phép; nếu sụt áp nhiều, chuyển sang Y–Δ ở ô Phương án khởi động." : "Phù hợp với động cơ dưới 7,5 kW, mạch đơn giản, mô-men khởi động lớn.");
+        }
+
+        var steps = [
+          "Công suất điện tiêu thụ: P<sub>điện</sub> = P / η = " + fmt(P, 1) + " / " + fmt(eta, 2) + " = " + fmt(Pin, 2) + " kW.",
+          three
+            ? "Dòng định mức (3 pha): I = P<sub>điện</sub> × 1000 / (√3 × 380 × cos φ) = " + fmt(I, 1) + " A."
+            : "Dòng định mức (1 pha): I = P<sub>điện</sub> × 1000 / (220 × cos φ) = " + fmt(I, 1) + " A.",
+          "Dòng khởi động: " + (mode === "yd" ? "Y–Δ: (6 × I) / 3" : "DOL: 6 × I") + " = " + fmt(Istart, 0) + " A (hệ số 6 là giá trị điển hình, thực tế 5–8 tùy động cơ).",
+          "MCCB: In ≥ 1,25 × I = " + fmt(need, 1) + " A → chọn cỡ chuẩn " + (In || "—") + " A, Icu ≥ " + (icu || "—") + " kA.",
+          "Dây: tra bảng (" + METHOD_NAME[method] + ") rồi nhân hệ số nhiệt k = √((90 − " + fmt(T, 0) + ") / 60) = " + fmt(kT, 2) + "; chọn tiết diện nhỏ nhất có Iz sau hiệu chỉnh ≥ " + (In || "—") + " A.",
+          "Sụt áp: ΔU% = " + (three ? "√3" : "2") + " × I × L × (ρ/S × cos φ + x × sin φ) / U × 100 = " + (chosen ? fmt(drop, 2) : "—") + "% với ρ = 0,0225 Ω·mm²/m, x = 0,08 Ω/km."
+        ];
+        $("stepsList").innerHTML = steps.map(function (s) { return "<li>" + s + "</li>"; }).join("");
+
+        highlightWire(chosen ? chosen[0] : null, col);
+        calcSC(); // cap nhat cong cu ngan mach theo day/l cua bai toan chinh neu chua sua tay
+      }
+
+      function highlightWire(size, col) {
+        var rows = $("wireTable").querySelectorAll("tbody tr");
+        rows.forEach(function (tr) {
+          var on = size !== null && parseFloat(tr.getAttribute("data-s")) === size;
+          tr.className = on ? "hl" : "";
+        });
+      }
+
+      /* ---------- Bang tra ---------- */
+      function buildTables() {
+        $("wireTable").querySelector("tbody").innerHTML = CABLE.map(function (r) {
+          return "<tr data-s=\"" + r[0] + "\"><td>" + fmtF(r[0]) + "</td><td>" + fmtF(r[1]) + "</td><td>" + fmtF(r[2]) + "</td><td>" + fmtF(r[3]) + "</td></tr>";
+        }).join("");
+        var frames = [[10, "10"], [16, "16"], [20, "16–25"], [25, "16–25"], [32, "32"], [40, "32–40"], [50, "50"], [63, "63"], [80, "80–100"], [100, "80–100"], [125, "125–160"], [160, "125–160"], [200, "200–250"], [250, "200–250"], [315, "315–400"], [400, "315–400"], [500, "500–630"], [630, "500–630"], [800, "800"]];
+        $("mccbTable").querySelector("tbody").innerHTML = frames.map(function (f) {
+          return "<tr><td>" + f[0] + "</td><td>" + icuFor(f[0]) + " kA</td><td>" + f[1] + " A</td></tr>";
+        }).join("");
+        $("rnTable").querySelector("tbody").innerHTML = RN_RANGES.map(function (r) {
+          return "<tr><td>" + fmtF(r[0]) + " – " + fmtF(r[1]) + "</td><td>" + fmt((r[0] + r[1]) / 2, 1) + "</td></tr>";
+        }).join("");
+        $("awgTable").querySelector("tbody").innerHTML = AWG.map(function (a) {
+          return "<tr><td>" + a[0] + "</td><td>" + fmt(a[1], 2) + "</td><td>" + fmt(Math.sqrt(4 * a[1] / Math.PI), 2) + "</td></tr>";
+        }).join("");
+        $("scSize").innerHTML = CABLE.map(function (r) {
+          return "<option value=\"" + r[0] + "\"" + (r[0] === 25 ? " selected" : "") + ">" + fmt(r[0], r[0] % 1 ? 1 : 0) + " mm²</option>";
+        }).join("");
+        $("cvAwg").innerHTML = AWG.map(function (a, i) {
+          return "<option value=\"" + i + "\"" + (a[1] === 5.26 ? " selected" : "") + ">AWG " + a[0] + "</option>";
+        }).join("");
+      }
+
+      /* ---------- Ngan mach ---------- */
+      function calcSC() {
+        var kva = parseFloat($("scKva").value), uk = parseFloat($("scUk").value),
+            S = parseFloat($("scSize").value), L = parseFloat($("scLen").value), U = 380;
+        if (!(kva > 0) || !(uk > 0) || !(S > 0) || !(L >= 0)) { $("scOut").innerHTML = ""; return; }
+        var ztr = (uk / 100) * U * U / (kva * 1000);
+        var iscTr = U / (Math.sqrt(3) * ztr);
+        var rc = RHO * L / S, xc = XKM * L;
+        var zc = Math.sqrt(rc * rc + xc * xc);
+        var iscEnd = U / (Math.sqrt(3) * (ztr + zc));
+        $("scOut").innerHTML =
+          "<div class=\"row\"><span>Dòng danh định phía hạ áp biến áp</span><b>" + fmt(kva * 1000 / (Math.sqrt(3) * U), 0) + " A</b></div>" +
+          "<div class=\"row\"><span>Isc tại thanh cái / đầu biến áp</span><b>" + fmt(iscTr / 1000, 1) + " kA</b></div>" +
+          "<div class=\"row\"><span>Isc cuối cáp " + fmt(S, 0) + " mm², dài " + fmt(L, 0) + " m</span><b>" + fmt(iscEnd / 1000, 1) + " kA</b></div>" +
+          "<div class=\"row\"><span>Chọn MCCB tổng với Icu tối thiểu</span><b>&gt; " + fmt(iscTr / 1000, 1) + " kA</b></div>";
+      }
+
+      /* ---------- Bu cong suat phan khang ---------- */
+      function calcBu() {
+        var P = parseFloat($("buP").value), c1 = parseFloat($("buCos1").value),
+            c2 = parseFloat($("buCos2").value), U = parseFloat($("buU").value);
+        if (!(P > 0) || !(c1 > 0 && c1 < 1) || !(c2 > c1 && c2 <= 1) || !(U > 0)) {
+          $("buOut").innerHTML = "<div class=\"row\"><span>Kiểm tra lại: cos φ mục tiêu phải lớn hơn cos φ hiện tại.</span></div>"; return;
+        }
+        var tan1 = Math.tan(Math.acos(c1)), tan2 = Math.tan(Math.acos(c2));
+        var qc = P * (tan1 - tan2);
+        var steps = [2.5, 5, 7.5, 10, 12.5, 15, 20, 25, 30, 40, 50, 60, 80, 100, 120, 150, 200];
+        var std = nextStd(steps, qc);
+        var ic = (std || qc) * 1000 / (Math.sqrt(3) * U);
+        var iBefore = P * 1000 / (Math.sqrt(3) * U * c1), iAfter = P * 1000 / (Math.sqrt(3) * U * c2);
+        $("buOut").innerHTML =
+          "<div class=\"row\"><span>Dung lượng bù cần thiết Qc</span><b>" + fmt(qc, 1) + " kvar</b></div>" +
+          "<div class=\"row\"><span>Chọn tụ tiêu chuẩn (≥ Qc)</span><b>" + (std ? fmt(std, 1) + " kvar" : "> 200 kvar — chia nhiều cấp") + "</b></div>" +
+          "<div class=\"row\"><span>Dòng điện của tụ</span><b>" + fmt(ic, 1) + " A</b></div>" +
+          "<div class=\"row\"><span>Dòng tải trước → sau bù</span><b>" + fmt(iBefore, 0) + " A → " + fmt(iAfter, 0) + " A</b></div>" +
+          "<div class=\"row\"><span>Giảm dòng tải</span><b>" + fmt((1 - iAfter / iBefore) * 100, 1) + " %</b></div>";
+      }
+
+      /* ---------- Chuyen doi ---------- */
+      function kwToHp() { var v = parseFloat($("cvKw").value); if (v >= 0) $("cvHp").value = (v / 0.746).toFixed(2); }
+      function hpToKw() { var v = parseFloat($("cvHp").value); if (v >= 0) $("cvKw").value = (v * 0.746).toFixed(2); }
+      function awgToMm() {
+        var a = AWG[parseInt($("cvAwg").value, 10)];
+        $("cvMm").value = a[1];
+        showAwg(a);
+      }
+      function mmToAwg() {
+        var v = parseFloat($("cvMm").value);
+        if (!(v > 0)) { $("awgOut").innerHTML = ""; return; }
+        var best = AWG[0];
+        AWG.forEach(function (a) { if (Math.abs(a[1] - v) < Math.abs(best[1] - v)) best = a; });
+        showAwg(best, v);
+      }
+      function showAwg(a, typed) {
+        var std = null;
+        CABLE.forEach(function (r) { if (std === null && r[0] >= a[1]) std = r[0]; });
+        $("awgOut").innerHTML =
+          "<div class=\"row\"><span>AWG " + a[0] + " ≈</span><b>" + fmt(a[1], 2) + " mm² · Ø " + fmt(Math.sqrt(4 * a[1] / Math.PI), 2) + " mm</b></div>" +
+          "<div class=\"row\"><span>Tiết diện tiêu chuẩn nên dùng</span><b>" + (std ? fmt(std, std % 1 ? 1 : 0) + " mm²" : "240 mm² trở lên") + "</b></div>" +
+          (typed ? "<div class=\"row\"><span>Giá trị bạn nhập</span><b>" + fmt(typed, 2) + " mm²</b></div>" : "");
+      }
+
+      /* ---------- Su kien ---------- */
+      function setU(u) {
+        state.U = u;
+        $("u380").className = u === 380 ? "on" : "";
+        $("u220").className = u === 220 ? "on" : "";
+        $("phaseHint").textContent = u === 380 ? "Động cơ 3 pha, đấu vào lưới 380 V." : "Động cơ 1 pha 220 V — không áp dụng sao–tam giác.";
+        calc();
+      }
+      $("u380").addEventListener("click", function () { setU(380); });
+      $("u220").addEventListener("click", function () { setU(220); });
+      ["inP", "inCos", "inEta", "inLen", "inTemp", "inMethod", "inStarter"].forEach(function (id) {
+        $(id).addEventListener("input", function () {
+          if (id === "inTemp") $("inTempR").value = $("inTemp").value;
+          calc();
+        });
+      });
+      $("inTempR").addEventListener("input", function () { $("inTemp").value = $("inTempR").value; calc(); });
+      $("ex55").addEventListener("click", function () {
+        state.U = 380; $("inP").value = 5.5; $("inCos").value = 0.84; $("inEta").value = 0.87;
+        $("inLen").value = 25; $("inMethod").value = "mang"; $("inTemp").value = 35; $("inTempR").value = 35;
+        $("inStarter").value = "auto"; setU(380);
+      });
+      $("ex15").addEventListener("click", function () {
+        state.U = 380; $("inP").value = 15; $("inCos").value = 0.86; $("inEta").value = 0.90;
+        $("inLen").value = 40; $("inMethod").value = "mang"; $("inTemp").value = 35; $("inTempR").value = 35;
+        $("inStarter").value = "auto"; setU(380);
+      });
+      ["scKva", "scUk", "scSize", "scLen"].forEach(function (id) { $(id).addEventListener("input", calcSC); });
+      ["buP", "buCos1", "buCos2", "buU"].forEach(function (id) { $(id).addEventListener("input", calcBu); });
+      $("cvKw").addEventListener("input", kwToHp);
+      $("cvHp").addEventListener("input", hpToKw);
+      $("cvAwg").addEventListener("input", awgToMm);
+      $("cvMm").addEventListener("input", mmToAwg);
+
+      buildTables();
+      kwToHp();
+      awgToMm();
+      calcBu();
+      calc();
+    </script>
+  </body>
+</html>
