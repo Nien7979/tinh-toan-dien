@@ -54,7 +54,7 @@
       .alert strong{ color:var(--amber-deep); }
 
       section{ margin-top:26px; }
-      h2.sec{ font-size:19px; font-weight:800; margin:0 0 4px; display:flex; align-items:center; gap:9px; }
+      h2.sec{ font-size:20px; font-weight:800; margin:0 0 4px; display:flex; align-items:center; gap:9px; }
       h2.sec .n{ font-family:var(--mono); font-size:12.5px; background:var(--brand); color:var(--brand-ink); border-radius:6px; padding:3px 8px; font-weight:600; }
       .sec-sub{ color:var(--muted); font-size:14px; margin:0 0 14px; }
 
@@ -126,7 +126,7 @@
       .conv label input, .conv label select{ margin-top:5px; }
 
       table{ width:100%; border-collapse:collapse; font-size:13.5px; background:var(--panel); }
-      .tbl{ border:1px solid var(--line); border-radius:12px; overflow:hidden; margin-bottom:18px; }
+      .tbl{ border:1px solid var(--line); border-radius:12px; overflow:hidden; margin-bottom:18px; padding:10px; }
       th{ background:var(--brand); color:var(--brand-ink); text-align:right; padding:9px 10px; font-weight:600; font-size:13px; }
       th:first-child, td:first-child{ text-align:left; }
       td{ padding:7px 10px; border-top:1px solid var(--line); text-align:right; font-family:var(--mono); font-size:13px; }
@@ -150,7 +150,7 @@
       .sub2:first-child{ margin-top:0; }
 
       .sw{ display:inline-block; width:14px; height:14px; border-radius:4px; border:1px solid rgba(0,0,0,.35); vertical-align:-2px; margin-right:6px; }
-      .sw.pe{ background:repeating-linear-gradient(45deg,#2e9e4f 0 5px,#f5d90a 5px 10px); }
+      .sw.pe{ background:linear-gradient(45deg,#2e9e4f 0 50%,#f5d90a 50% 100%); }
       td.txt, th.txt{ text-align:left; font-family:var(--sans); font-weight:500; }
       td.txt b{ font-weight:700; }
       .diagrams{ display:grid; grid-template-columns:1fr; gap:14px; margin-top:4px; }
@@ -178,8 +178,8 @@
             <svg viewBox="0 0 24 24" fill="none"><path d="M13 2 4.5 13.5H11L9.8 22 19 10h-6.5L13 2Z" fill="#1e2a22"/></svg>
           </div>
           <div>
-            <h1>Tính Toán Điện — bộ công cụ kỹ sư điện</h1>
-            <p>Chọn dây, MCCB &amp; khởi động động cơ; tính điện cơ bản, ngắn mạch, bù công suất, động cơ, điện tử, chuyển đổi đơn vị, bảng tra và sơ đồ chân — tất cả trong một trang.</p>
+            <h1>Tính Toán Điện: bộ công cụ kỹ sư điện</h1>
+            <p>Chọn dây, MCCB &amp; khởi động động cơ; tính điện cơ bản, ngắn mạch, bù công suất, động cơ, điện tử, chuyển đổi đơn vị, bảng tra và sơ đồ chân, tất cả trong một trang.</p>
           </div>
         </div>
       </header>
@@ -198,7 +198,7 @@
       <div class="searchbar">
         <input type="search" id="toolSearch" placeholder="Tìm công cụ… ví dụ: sụt áp, mã màu, tụ bù, sơ đồ chân" aria-label="Tìm công cụ" />
       </div>
-      <p class="nomatch" id="noMatch">Không thấy công cụ khớp — thử từ khóa ngắn hơn, ví dụ “dây”, “tụ”, “động cơ”.</p>
+      <p class="nomatch" id="noMatch">Không thấy công cụ khớp: thử từ khóa ngắn hơn, ví dụ “dây”, “tụ”, “động cơ”.</p>
 
       <div class="alert" role="note">
         <strong>⚠ Cảnh báo an toàn:</strong> Kết quả trong app chỉ để <strong>tham khảo và học tập</strong>. Trước khi thi công phải kiểm tra lại theo tiêu chuẩn thực tế (IEC 60364, TCVN 7447, quy định của điện lực) và điều kiện hiện trường; việc lắp đặt phải do thợ điện có chuyên môn thực hiện, ngắt điện và kiểm tra hết điện trước khi thao tác.
@@ -441,7 +441,7 @@
           </div>
 
           <div class="card" data-q="joule nhiet nang luong kwh heating effect">
-            <h3>Hiệu ứng Joule — nhiệt &amp; điện năng</h3>
+            <h3>Hiệu ứng Joule: nhiệt &amp; điện năng</h3>
             <div class="fields">
               <label class="f">Dòng điện I <span class="unit">(A)</span>
                 <input type="number" id="jlI" value="10" min="0" step="0.5" inputmode="decimal" />
@@ -460,7 +460,7 @@
           </div>
 
           <div class="card" data-q="noi dat earth ground rod dien tro dat grounding">
-            <h3>Hệ thống nối đất — cọc đất</h3>
+            <h3>Hệ thống nối đất: cọc đất</h3>
             <div class="fields">
               <label class="f">Điện trở suất đất ρ <span class="unit">(Ω·m)</span>
                 <input type="number" id="gdRho" value="100" min="1" step="5" inputmode="decimal" />
@@ -477,7 +477,7 @@
               </label>
             </div>
             <div class="out" id="gdOut"></div>
-            <p class="hint">Công thức Dwight cho cọc đơn; nhiều cọc nhân hệ số sử dụng 0,85 (cọc cách nhau ≥ chiều dài cọc). Yêu cầu thường gặp: ≤ 4 Ω (chống sét/trạm) · ≤ 10 Ω (nối đất an toàn hạ thế) — đối chiếu quy định áp dụng.</p>
+            <p class="hint">Công thức Dwight cho cọc đơn; nhiều cọc nhân hệ số sử dụng 0,85 (cọc cách nhau ≥ chiều dài cọc). Yêu cầu thường gặp: ≤ 4 Ω (chống sét/trạm) · ≤ 10 Ω (nối đất an toàn hạ thế). Đối chiếu quy định áp dụng.</p>
           </div>
 
           <div class="card" data-q="do day ong conduit fill gen ong">
@@ -577,7 +577,7 @@
               </label>
             </div>
             <div class="out" id="scOut"></div>
-            <p class="hint">Ước tính gần đúng (cộng trở kháng biến áp và cáp, điện trở suất đồng 0,0225 Ω·mm²/m, điện kháng cáp 0,08 Ω/km). Dòng ngắn mạch thực tế còn phụ thuộc lưới phía trước biến áp — khi chọn MCCB, lấy I<sub>cu</sub> lớn hơn giá trị này và đối chiếu catalogue hãng.</p>
+            <p class="hint">Ước tính gần đúng (cộng trở kháng biến áp và cáp, điện trở suất đồng 0,0225 Ω·mm²/m, điện kháng cáp 0,08 Ω/km). Dòng ngắn mạch thực tế còn phụ thuộc lưới phía trước biến áp. Khi chọn MCCB, lấy I<sub>cu</sub> lớn hơn giá trị này và đối chiếu catalogue hãng.</p>
           </div>
 
           <div class="card">
@@ -619,8 +619,8 @@
               <label class="f full">Đấu nối (để quy đổi µF)
                 <select id="capMode">
                   <option value="1">1 pha</option>
-                  <option value="d" selected>3 pha — tam giác (Δ), µF mỗi pha</option>
-                  <option value="y">3 pha — sao (Y), µF mỗi pha</option>
+                  <option value="d" selected>3 pha: tam giác (Δ), µF mỗi pha</option>
+                  <option value="y">3 pha: sao (Y), µF mỗi pha</option>
                 </select>
               </label>
             </div>
@@ -699,7 +699,7 @@
             <p class="hint" style="margin-top:0">Hộp đầu cực động cơ 3 pha có 6 đầu dây: <b>U1–U2</b>, <b>V1–V2</b>, <b>W1–W2</b> là đầu–cuối của 3 cuộn dây. Cách bố trí cọc chuẩn trong hộp đấu: hàng trên U1 · V1 · W1, hàng dưới W2 · U2 · V2 (so le để lắp thanh nối).</p>
             <div class="diagrams">
               <div class="diagram">
-                <h4>Đấu sao (Y) — thanh nối ngang 3 cọc dưới</h4>
+                <h4>Đấu sao (Y): thanh nối ngang 3 cọc dưới</h4>
                 <svg viewBox="0 0 260 190" width="260" height="190" role="img" aria-label="Sơ đồ đấu sao: W2 U2 V2 nối chung thành điểm trung tính, L1 L2 L3 vào U1 V1 W1">
                   <g font-family="var(--mono)" font-size="12" fill="var(--ink)">
                     <line x1="50" y1="18" x2="50" y2="52" stroke="var(--ink)" stroke-width="1.6"/><text x="38" y="14">L1</text>
@@ -721,7 +721,7 @@
                 <p>Nguồn: L1 → U1 · L2 → V1 · L3 → W1. Mỗi cuộn chịu điện áp pha (U<sub>dây</sub>/√3, ví dụ 220 V khi lưới 380 V). Dùng khi nhãn động cơ ghi Y 380 V.</p>
               </div>
               <div class="diagram">
-                <h4>Đấu tam giác (Δ) — 3 thanh nối dọc</h4>
+                <h4>Đấu tam giác (Δ): 3 thanh nối dọc</h4>
                 <svg viewBox="0 0 260 190" width="260" height="190" role="img" aria-label="Sơ đồ đấu tam giác: U1 nối W2, V1 nối U2, W1 nối V2, L1 L2 L3 vào U1 V1 W1">
                   <g font-family="var(--mono)" font-size="12" fill="var(--ink)">
                     <line x1="50" y1="18" x2="50" y2="52" stroke="var(--ink)" stroke-width="1.6"/><text x="38" y="14">L1</text>
@@ -739,7 +739,7 @@
                     <text x="18" y="182" font-size="11.5">U1–W2 · V1–U2 · W1–V2 (cuối cuộn trước nối đầu cuộn sau)</text>
                   </g>
                 </svg>
-                <p>Nguồn: L1 → U1 · L2 → V1 · L3 → W1. Mỗi cuộn chịu trọn điện áp dây (380 V khi lưới 380 V). Chỉ dùng khi nhãn động cơ ghi Δ 380 V — đấu nhầm Δ cho động cơ Y 380/660 V sẽ cháy cuộn dây.</p>
+                <p>Nguồn: L1 → U1 · L2 → V1 · L3 → W1. Mỗi cuộn chịu trọn điện áp dây (380 V khi lưới 380 V). Chỉ dùng khi nhãn động cơ ghi Δ 380 V. Đấu nhầm Δ cho động cơ Y 380/660 V sẽ cháy cuộn dây.</p>
               </div>
             </div>
             <div class="tbl" style="margin-top:14px">
@@ -770,7 +770,7 @@
               </label>
             </div>
             <div class="out" id="tmOut"></div>
-            <p class="hint">T<sub>đm</sub> = 9550 × P / n. T<sub>max</sub> = λ × T<sub>đm</sub>: tải vượt quá T<sub>max</sub> thì động cơ mất đồng bộ và khựng lại (stall). Hai bội số λ và mô-men khởi động phải lấy từ catalogue của đúng model động cơ — số mặc định chỉ là giá trị điển hình để ước tính.</p>
+            <p class="hint">T<sub>đm</sub> = 9550 × P / n. T<sub>max</sub> = λ × T<sub>đm</sub>: tải vượt quá T<sub>max</sub> thì động cơ mất đồng bộ và khựng lại (stall). Hai bội số λ và mô-men khởi động phải lấy từ catalogue của đúng model động cơ: số mặc định chỉ là giá trị điển hình để ước tính.</p>
           </div>
         </div>
       </section>
@@ -917,7 +917,7 @@
               <div class="arr" aria-hidden="true">⇄</div>
               <label>công suất (HP)<input type="number" id="cvHp" value="10.06" step="0.1" inputmode="decimal" /></label>
             </div>
-            <p class="hint">1 HP = 0,746 kW · 1 kW = 1,34 HP. Lưu ý mã lực mét (PS/cv) nhỏ hơn một chút: 1 PS = 0,7355 kW — động cơ châu Âu ghi kW nên ưu tiên dùng kW.</p>
+            <p class="hint">1 HP = 0,746 kW · 1 kW = 1,34 HP. Lưu ý mã lực mét (PS/cv) nhỏ hơn một chút: 1 PS = 0,7355 kW: động cơ châu Âu ghi kW nên ưu tiên dùng kW.</p>
           </div>
 
           <div class="card" data-q="doi awg mm2 duong kinh day">
@@ -1004,18 +1004,18 @@
               </label>
             </div>
             <div class="out" id="dyYOut"></div>
-            <p class="hint">Công thức Δ → Y: R<sub>A</sub> = R<sub>AB</sub>·R<sub>CA</sub> / (R<sub>AB</sub>+R<sub>BC</sub>+R<sub>CA</sub>) — nhánh sao tại một đỉnh bằng tích hai cạnh tam giác kề đỉnh đó chia cho tổng ba cạnh, và tương tự cho R<sub>B</sub>, R<sub>C</sub>. Công thức Y → Δ: R<sub>AB</sub> = R<sub>A</sub>+R<sub>B</sub> + R<sub>A</sub>·R<sub>B</sub>/R<sub>C</sub> (cạnh đối diện đỉnh còn lại), tương tự cho R<sub>BC</sub>, R<sub>CA</sub>. Trường hợp cân bằng 3 nhánh bằng nhau rút gọn thành: <b>R<sub>Y</sub> = R<sub>Δ</sub> / 3</b> và <b>R<sub>Δ</sub> = 3 × R<sub>Y</sub></b>. Công thức đúng cho điện trở thuần; với trở kháng phức thay R bằng Z và dùng số phức.</p>
+            <p class="hint">Công thức Δ → Y: R<sub>A</sub> = R<sub>AB</sub>·R<sub>CA</sub> / (R<sub>AB</sub>+R<sub>BC</sub>+R<sub>CA</sub>): nhánh sao tại một đỉnh bằng tích hai cạnh tam giác kề đỉnh đó chia cho tổng ba cạnh, và tương tự cho R<sub>B</sub>, R<sub>C</sub>. Công thức Y → Δ: R<sub>AB</sub> = R<sub>A</sub>+R<sub>B</sub> + R<sub>A</sub>·R<sub>B</sub>/R<sub>C</sub> (cạnh đối diện đỉnh còn lại), tương tự cho R<sub>BC</sub>, R<sub>CA</sub>. Trường hợp cân bằng 3 nhánh bằng nhau rút gọn thành: <b>R<sub>Y</sub> = R<sub>Δ</sub> / 3</b> và <b>R<sub>Δ</sub> = 3 × R<sub>Y</sub></b>. Công thức đúng cho điện trở thuần; với trở kháng phức thay R bằng Z và dùng số phức.</p>
           </div>
         </div>
       </section>
 
       <section id="bang-tra">
         <h2 class="sec"><span class="n">07</span> Bảng tra cứu</h2>
-        <p class="sec-sub">Các bảng app dùng để chọn thiết bị — bấm nút ví dụ ở trên, hàng được chọn sẽ sáng lên. Giá trị là dòng cho phép tham khảo của cáp đồng cách điện XLPE, 3 lõi chịu tải, ở 30 °C (theo IEC 60364-5-52), trước khi nhân hệ số nhiệt độ. Nếu dùng cáp cách điện PVC (nhiệt độ ruột tối đa 70 °C thay vì 90 °C), dòng cho phép thấp hơn — phải tra bảng PVC riêng của hãng, không dùng chung bảng này.</p>
+        <p class="sec-sub">Các bảng app dùng để chọn thiết bị: bấm nút ví dụ ở trên, hàng được chọn sẽ sáng lên. Giá trị là dòng cho phép tham khảo của cáp đồng cách điện XLPE, 3 lõi chịu tải, ở 30 °C (theo IEC 60364-5-52), trước khi nhân hệ số nhiệt độ. Nếu dùng cáp cách điện PVC (nhiệt độ ruột tối đa 70 °C thay vì 90 °C), dòng cho phép thấp hơn, phải tra bảng PVC riêng của hãng, không dùng chung bảng này.</p>
 
         <div class="tbl">
           <table id="wireTable">
-            <caption>Bảng 1 — Dòng cho phép của dây đồng theo tiết diện &amp; cách lắp đặt (A)</caption>
+            <caption>Bảng 1: Dòng cho phép của dây đồng theo tiết diện &amp; cách lắp đặt (A)</caption>
             <thead><tr><th>Tiết diện (mm²)</th><th>Trong ống</th><th>Máng thoáng</th><th>Chôn đất</th></tr></thead>
             <tbody></tbody>
           </table>
@@ -1025,7 +1025,7 @@
         <div class="cols2">
           <div class="tbl">
             <table id="mccbTable">
-              <caption>Bảng 2 — MCCB: dòng định mức chuẩn &amp; khả năng cắt gợi ý (400 V)</caption>
+              <caption>Bảng 2, MCCB: dòng định mức chuẩn &amp; khả năng cắt gợi ý (400 V)</caption>
               <thead><tr><th>I<sub>n</sub> (A)</th><th>I<sub>cu</sub> gợi ý</th><th>Khung thường gặp</th></tr></thead>
               <tbody></tbody>
             </table>
@@ -1033,26 +1033,26 @@
           <div>
             <div class="tbl">
               <table id="rnTable">
-                <caption>Bảng 3 — Dải chỉnh rơ le nhiệt thông dụng (A)</caption>
+                <caption>Bảng 3: Dải chỉnh rơ le nhiệt thông dụng (A)</caption>
                 <thead><tr><th>Dải chỉnh</th><th>Đặt giữa dải ≈</th></tr></thead>
                 <tbody></tbody>
               </table>
             </div>
             <div class="tbl">
               <table id="awgTable">
-                <caption>Bảng 4 — Quy đổi AWG sang mm²</caption>
+                <caption>Bảng 4: Quy đổi AWG sang mm²</caption>
                 <thead><tr><th>AWG</th><th>mm²</th><th>Ø ruột (mm)</th></tr></thead>
                 <tbody></tbody>
               </table>
             </div>
           </div>
         </div>
-        <p class="tblnote">Gợi ý nhanh chọn khởi động: động cơ ≤ 7,5 kW — khởi động trực tiếp DOL; 7,5–11 kW — DOL vẫn dùng được nếu lưới khỏe, tải nhẹ; ≥ 11 kW — nên dùng sao–tam giác Y–Δ, khởi động mềm hoặc biến tần để giảm dòng khởi động và sụt áp lưới.</p>
+        <p class="tblnote">Gợi ý nhanh chọn khởi động: động cơ ≤ 7,5 kW: khởi động trực tiếp DOL; 7,5–11 kW: DOL vẫn dùng được nếu lưới khỏe, tải nhẹ; ≥ 11 kW: nên dùng sao–tam giác Y–Δ, khởi động mềm hoặc biến tần để giảm dòng khởi động và sụt áp lưới.</p>
 
         <div class="cols2">
           <div class="tbl">
             <table>
-              <caption>Bảng 5 — Điện trở suất vật liệu ở 20 °C</caption>
+              <caption>Bảng 5: Điện trở suất vật liệu ở 20 °C</caption>
               <thead><tr><th>Vật liệu</th><th>ρ (Ω·mm²/m)</th><th>α (/°C)</th></tr></thead>
               <tbody>
                 <tr><td>Bạc</td><td>0,0159</td><td>0,0038</td></tr>
@@ -1068,7 +1068,7 @@
           </div>
           <div class="tbl">
             <table>
-              <caption>Bảng 6 — Dòng cho phép thanh cái đồng (1 thanh, AC)</caption>
+              <caption>Bảng 6: Dòng cho phép thanh cái đồng (1 thanh, AC)</caption>
               <thead><tr><th>Kích thước (mm)</th><th>Tiết diện (mm²)</th><th>Dòng (A)</th></tr></thead>
               <tbody>
                 <tr><td>20 × 5</td><td>100</td><td>274</td></tr>
@@ -1090,7 +1090,7 @@
         <div class="cols2">
           <div class="tbl">
             <table>
-              <caption>Bảng 7 — Lớp cách điện động cơ (nhiệt độ tối đa)</caption>
+              <caption>Bảng 7: Lớp cách điện động cơ (nhiệt độ tối đa)</caption>
               <thead><tr><th>Lớp</th><th>°C</th><th>Ghi chú</th></tr></thead>
               <tbody>
                 <tr><td>Y</td><td>90</td><td>Hiếm dùng hiện nay</td></tr>
@@ -1106,7 +1106,7 @@
           <div>
             <div class="tbl">
               <table>
-                <caption>Bảng 8 — Cấp bảo vệ IP / IK thường gặp</caption>
+                <caption>Bảng 8: Cấp bảo vệ IP / IK thường gặp</caption>
                 <thead><tr><th>Mã</th><th>Ý nghĩa</th></tr></thead>
                 <tbody>
                   <tr><td>IP20</td><td>Chống ngón tay, trong nhà khô</td></tr>
@@ -1126,23 +1126,23 @@
 
         <div class="tbl">
           <table>
-            <caption>Bảng 9 — Mã màu dây dẫn: IEC và cách dùng thường gặp ở Việt Nam</caption>
+            <caption>Bảng 9: Mã màu dây dẫn: IEC và cách dùng thường gặp ở Việt Nam</caption>
             <thead><tr><th>Chức năng</th><th class="txt">IEC 60446 / IEC 60364</th><th class="txt">Thường dùng ở Việt Nam (tham khảo thực tế thi công)</th></tr></thead>
             <tbody>
               <tr><td>Pha L1</td><td class="txt"><span class="sw" style="background:#6d4c41"></span><b>Nâu</b></td><td class="txt"><span class="sw" style="background:#c62828"></span><b>Đỏ</b> (một số tủ dùng nâu theo IEC)</td></tr>
               <tr><td>Pha L2</td><td class="txt"><span class="sw" style="background:#222222"></span><b>Đen</b></td><td class="txt"><span class="sw" style="background:#f9a825"></span><b>Vàng</b></td></tr>
               <tr><td>Pha L3</td><td class="txt"><span class="sw" style="background:#9e9e9e"></span><b>Xám</b></td><td class="txt"><span class="sw" style="background:#1565c0"></span><b>Xanh dương đậm</b></td></tr>
-              <tr><td>Trung tính N</td><td class="txt"><span class="sw" style="background:#42a5f5"></span><b>Xanh dương nhạt</b></td><td class="txt"><span class="sw" style="background:#222222"></span><b>Đen</b> hoặc xanh dương nhạt theo IEC — phải ghi nhãn N rõ ràng</td></tr>
+              <tr><td>Trung tính N</td><td class="txt"><span class="sw" style="background:#42a5f5"></span><b>Xanh dương nhạt</b></td><td class="txt"><span class="sw" style="background:#222222"></span><b>Đen</b> hoặc xanh dương nhạt theo IEC, phải ghi nhãn N rõ ràng</td></tr>
               <tr><td>Tiếp đất PE</td><td class="txt"><span class="sw pe"></span><b>Vàng – xanh lá sọc</b> (bắt buộc, không dùng cho mục đích khác)</td><td class="txt"><span class="sw pe"></span><b>Vàng – xanh lá sọc</b> (thống nhất với IEC)</td></tr>
               <tr><td>Pha 1 pha</td><td class="txt"><span class="sw" style="background:#6d4c41"></span>Nâu (hoặc đỏ/đen/vàng theo mã màu cũ)</td><td class="txt"><span class="sw" style="background:#c62828"></span>Đỏ thường dùng cho dây lửa, đen cho dây nguội</td></tr>
             </tbody>
           </table>
         </div>
-        <p class="tblnote">Cột Việt Nam phản ánh thói quen thi công phổ biến, không phải quy định bắt buộc duy nhất: khi nhận bàn giao hoặc sửa chữa tủ/cáp có sẵn, tuyệt đối không tin màu dây 100% — phải đo kiểm tra bằng đồng hồ và đối chiếu sơ đồ trước khi thao tác. Màu PE vàng–xanh và N xanh dương nhạt theo IEC là hai màu có ý nghĩa bảo vệ/chức năng riêng, không được dùng lẫn cho dây pha.</p>
+        <p class="tblnote">Cột Việt Nam phản ánh thói quen thi công phổ biến, không phải quy định bắt buộc duy nhất: khi nhận bàn giao hoặc sửa chữa tủ/cáp có sẵn, tuyệt đối không tin màu dây 100%: phải đo kiểm tra bằng đồng hồ và đối chiếu sơ đồ trước khi thao tác. Màu PE vàng–xanh và N xanh dương nhạt theo IEC là hai màu có ý nghĩa bảo vệ/chức năng riêng, không được dùng lẫn cho dây pha.</p>
 
         <div class="tbl">
           <table>
-            <caption>Bảng 10 — Kích thước &amp; trọng lượng cáp đồng XLPE/PVC (giá trị tham khảo điển hình)</caption>
+            <caption>Bảng 10: Kích thước &amp; trọng lượng cáp đồng XLPE/PVC (giá trị tham khảo điển hình)</caption>
             <thead><tr><th>Tiết diện (mm²)</th><th>Ø ngoài 1 lõi (mm)</th><th>Nặng 1 lõi (kg/km)</th><th>Ø ngoài 3 lõi (mm)</th><th>Nặng 3 lõi (kg/km)</th></tr></thead>
             <tbody>
               <tr><td>1,5</td><td>5,0</td><td>32</td><td>10,5</td><td>105</td></tr>
@@ -1166,7 +1166,7 @@
         <p class="tblnote">Bảng 10 là giá trị điển hình cho cáp Cu/XLPE/PVC 0,6/1 kV ruột tròn; đường kính và trọng lượng thực tế chênh nhau theo hãng (ruột nén chặt, có giáp, số lõi kèm dây N/PE giảm tiết diện…). Khi tính tải trọng máng cáp, bán kính uốn và kéo cáp, lấy số liệu trong catalogue của đúng mã cáp sẽ dùng.</p>
 
         <div class="card" style="margin-bottom:18px">
-          <h3>Bảng 11 — Ký hiệu điện thường dùng (IEC 60617, vẽ đơn giản)</h3>
+          <h3>Bảng 11: Ký hiệu điện thường dùng (IEC 60617, vẽ đơn giản)</h3>
           <div class="symgrid">
             <div class="sym"><svg viewBox="0 0 60 44" width="60" height="44" aria-hidden="true"><g stroke="var(--ink)" stroke-width="1.6" fill="none"><line x1="30" y1="2" x2="30" y2="12"/><line x1="30" y1="12" x2="46" y2="4"/><rect x="21" y="12" width="18" height="12"/><line x1="30" y1="24" x2="30" y2="32"/><path d="M24 32h12l-6 8z" fill="var(--ink)"/></g></svg><div class="nm">Cầu dao cách ly</div><div class="cd">QS</div></div>
             <div class="sym"><svg viewBox="0 0 60 44" width="60" height="44" aria-hidden="true"><g stroke="var(--ink)" stroke-width="1.6" fill="none"><line x1="30" y1="2" x2="30" y2="14"/><rect x="22" y="14" width="16" height="16"/><line x1="30" y1="30" x2="30" y2="42"/></g></svg><div class="nm">Cầu chì</div><div class="cd">FU</div></div>
@@ -1200,7 +1200,7 @@
         <div class="cols2">
           <div class="tbl">
             <table>
-              <caption>RJ-45 Ethernet — chuẩn T568B</caption>
+              <caption>RJ-45 Ethernet: chuẩn T568B</caption>
               <thead><tr><th>Chân</th><th>Màu dây</th><th>Tín hiệu</th></tr></thead>
               <tbody>
                 <tr><td>1</td><td>Trắng cam</td><td>TX+</td></tr>
@@ -1217,18 +1217,18 @@
           <div>
             <div class="tbl">
               <table>
-                <caption>RS-232 — cổng DB9 (DTE)</caption>
+                <caption>RS-232: cổng DB9 (DTE)</caption>
                 <thead><tr><th>Chân</th><th>Tín hiệu</th></tr></thead>
                 <tbody>
-                  <tr><td>1</td><td>DCD — phát hiện sóng mang</td></tr>
-                  <tr><td>2</td><td>RxD — nhận dữ liệu</td></tr>
-                  <tr><td>3</td><td>TxD — truyền dữ liệu</td></tr>
-                  <tr><td>4</td><td>DTR — sẵn sàng đầu cuối</td></tr>
-                  <tr><td>5</td><td>GND — đất tín hiệu</td></tr>
-                  <tr><td>6</td><td>DSR — sẵn sàng dữ liệu</td></tr>
-                  <tr><td>7</td><td>RTS — yêu cầu gửi</td></tr>
-                  <tr><td>8</td><td>CTS — sẵn sàng gửi</td></tr>
-                  <tr><td>9</td><td>RI — báo chuông</td></tr>
+                  <tr><td>1</td><td>DCD: phát hiện sóng mang</td></tr>
+                  <tr><td>2</td><td>RxD: nhận dữ liệu</td></tr>
+                  <tr><td>3</td><td>TxD: truyền dữ liệu</td></tr>
+                  <tr><td>4</td><td>DTR: sẵn sàng đầu cuối</td></tr>
+                  <tr><td>5</td><td>GND: đất tín hiệu</td></tr>
+                  <tr><td>6</td><td>DSR: sẵn sàng dữ liệu</td></tr>
+                  <tr><td>7</td><td>RTS: yêu cầu gửi</td></tr>
+                  <tr><td>8</td><td>CTS: sẵn sàng gửi</td></tr>
+                  <tr><td>9</td><td>RI: báo chuông</td></tr>
                 </tbody>
               </table>
             </div>
@@ -1261,7 +1261,7 @@
           </div>
           <div class="tbl">
             <table>
-              <caption>MIDI — DIN 5 chân &amp; microSD</caption>
+              <caption>MIDI: DIN 5 chân &amp; microSD</caption>
               <thead><tr><th>Đầu nối</th><th>Chân</th><th>Tín hiệu</th></tr></thead>
               <tbody>
                 <tr><td>MIDI</td><td>2</td><td>GND (chỉ ở cổng Out)</td></tr>
@@ -1280,7 +1280,7 @@
         </div>
         <div class="tbl">
           <table>
-            <caption>Raspberry Pi — GPIO 40 chân (header J8, tóm tắt)</caption>
+            <caption>Raspberry Pi: GPIO 40 chân (header J8, tóm tắt)</caption>
             <thead><tr><th>Chân</th><th class="txt">Chức năng</th><th>Chân</th><th class="txt">Chức năng</th></tr></thead>
             <tbody>
               <tr><td>1</td><td class="txt">3V3 (nguồn 3,3 V)</td><td>2</td><td class="txt">5V (nguồn 5 V)</td></tr>
@@ -1306,12 +1306,12 @@
             </tbody>
           </table>
         </div>
-        <p class="tblnote">Tóm tắt nhanh: chân nguồn 3V3 = 1, 17 · 5V = 2, 4 · GND = 6, 9, 14, 20, 25, 30, 34, 39. Chân lẻ nằm một hàng, chân chẵn một hàng; chân 1 ở phía gần khe thẻ microSD / đèn LED bo mạch — luôn xác nhận lại dấu chấm/vạch chân 1 trên đúng model Pi trước khi cấp nguồn. GPIO chỉ chịu 3,3 V, không nối thẳng 5 V hay điện áp điều khiển 24 V của tủ điện.</p>
+        <p class="tblnote">Tóm tắt nhanh: chân nguồn 3V3 = 1, 17 · 5V = 2, 4 · GND = 6, 9, 14, 20, 25, 30, 34, 39. Chân lẻ nằm một hàng, chân chẵn một hàng; chân 1 ở phía gần khe thẻ microSD / đèn LED bo mạch. Luôn xác nhận lại dấu chấm/vạch chân 1 trên đúng model Pi trước khi cấp nguồn. GPIO chỉ chịu 3,3 V, không nối thẳng 5 V hay điện áp điều khiển 24 V của tủ điện.</p>
 
         <div class="cols2">
           <div class="tbl">
             <table>
-              <caption>OBD II — giắc chẩn đoán ô tô 16 chân</caption>
+              <caption>OBD II: giắc chẩn đoán ô tô 16 chân</caption>
               <thead><tr><th>Chân</th><th class="txt">Chức năng</th></tr></thead>
               <tbody>
                 <tr><td>1</td><td class="txt">Tùy hãng xe (thường không dùng / tín hiệu riêng)</td></tr>
@@ -1335,7 +1335,7 @@
           </div>
           <div class="tbl">
             <table>
-              <caption>HDMI Type-A — đủ 19 chân</caption>
+              <caption>HDMI Type-A: đủ 19 chân</caption>
               <thead><tr><th>Chân</th><th class="txt">Tín hiệu</th></tr></thead>
               <tbody>
                 <tr><td>1</td><td class="txt">TMDS Data2+</td></tr>
@@ -1352,8 +1352,8 @@
                 <tr><td>12</td><td class="txt">TMDS Clock−</td></tr>
                 <tr><td>13</td><td class="txt">CEC (điều khiển thiết bị)</td></tr>
                 <tr><td>14</td><td class="txt">Utility / HEAC+ (Ethernet + kênh âm thanh về)</td></tr>
-                <tr><td>15</td><td class="txt">SCL (DDC — đồng hồ I2C)</td></tr>
-                <tr><td>16</td><td class="txt">SDA (DDC — dữ liệu I2C)</td></tr>
+                <tr><td>15</td><td class="txt">SCL (DDC: đồng hồ I2C)</td></tr>
+                <tr><td>16</td><td class="txt">SDA (DDC: dữ liệu I2C)</td></tr>
                 <tr><td>17</td><td class="txt">GND của DDC / CEC</td></tr>
                 <tr><td>18</td><td class="txt">+5 V (nguồn cho mạch đọc EDID)</td></tr>
                 <tr><td>19</td><td class="txt">Hot Plug Detect / HEAC−</td></tr>
@@ -1361,7 +1361,7 @@
             </table>
           </div>
         </div>
-        <p class="tblnote">Thẻ SIM (ISO 7816): C1 = VCC · C2 = RST · C3 = CLK · C5 = GND · C6 = VPP (ít dùng) · C7 = I/O dữ liệu. Với HDMI, thứ tự chân trên đầu nối hàn trên bo mạch có thể đánh số ngược so với mặt cáp — đối chiếu datasheet của đầu nối cụ thể trước khi hàn.</p>
+        <p class="tblnote">Thẻ SIM (ISO 7816): C1 = VCC · C2 = RST · C3 = CLK · C5 = GND · C6 = VPP (ít dùng) · C7 = I/O dữ liệu. Với HDMI, thứ tự chân trên đầu nối hàn trên bo mạch có thể đánh số ngược so với mặt cáp: đối chiếu datasheet của đầu nối cụ thể trước khi hàn.</p>
       </section>
 
       <footer>
